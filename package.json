@@ -1,0 +1,60 @@
+{
+  "name": "json-yaml-path",
+  "displayName": "json+yaml+path",
+  "description": "Displays the current property path for JSON and YAML files directly above your cursor with one-click copy to clipboard functionality",
+  "version": "0.1.0",
+  "keywords": [
+    "json",
+    "yaml",
+    "path",
+    "codelens",
+    "developer tools",
+    "utility",
+    "copy path",
+    "yaml path",
+    "json path"
+  ],
+  "engines": {
+    "vscode": "^1.109.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onLanguage:json",
+    "onLanguage:jsonc",
+    "onLanguage:yaml"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "propertyPathViewer.copy",
+        "title": "Copy JSON or YAML Property Path"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.10",
+    "@types/node": "22.x",
+    "@types/vscode": "^1.109.0",
+    "@types/yaml": "^1.9.6",
+    "@vscode/test-cli": "^0.0.12",
+    "@vscode/test-electron": "^2.5.2",
+    "eslint": "^9.39.2",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.54.0"
+  },
+  "dependencies": {
+    "jsonc-parser": "^3.3.1",
+    "yaml": "^2.8.2"
+  }
+}
