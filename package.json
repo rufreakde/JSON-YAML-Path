@@ -1,6 +1,11 @@
 {
   "name": "json-yaml-path",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rufreakde/JSON-YAML-Path"
+  },
   "displayName": "json+yaml+path",
+  "publisher": "rufreakde",
   "description": "Displays the current property path for JSON and YAML files directly above your cursor with one-click copy to clipboard functionality",
   "version": "0.1.0",
   "keywords": [
