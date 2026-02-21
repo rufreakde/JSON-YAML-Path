@@ -58,6 +58,15 @@ This extension is designed to be "zero-config." However, ensure that **CodeLens*
 
 ---
 
+# How to Release manually (without azure devops)
+
+- bumb persion in package.json
+- have changed merged to main
+- CLI comamnd: `vsce package`
+- new package version `.vsix` file will be generated
+- navigate to [Marketplace](https://marketplace.visualstudio.com/manage/publishers/rufreakde) -> Extensions
+- drag and drop new version
+
 ## 🤝 Contributing
 
 Found a bug or have a feature request? Please open an issue on the [GitHub Repository](https://github.com/rufreakde/JSON-YAML-Path.git).
