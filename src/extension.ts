@@ -17,6 +17,12 @@ class PropertyPathCodeLensProvider implements vscode.CodeLensProvider {
       return [];
     }
 
+    // section to check if user has highlighted marked some text we dont want to display the plugin
+    const editor = vscode.window.activeTextEditor;
+    if (!editor || editor.document !== document || !editor.selection.isEmpty) {
+      return [];
+    }
+
     // Update the path based on the current cursor position
     await this.updatePath(document);
 
@@ -147,6 +153,8 @@ class PropertyPathCodeLensProvider implements vscode.CodeLensProvider {
   }
 }
 
+const displayDelayInMS = 170
+
 export function activate(context: vscode.ExtensionContext) {
   console.log("🔥 json+yaml+paths - Property Path Viewer plugin ACTIVATED");
 
@@ -160,11 +168,21 @@ export function activate(context: vscode.ExtensionContext) {
   // Trigger a refresh whenever the cursor moves (with debounce)
   let timeout: NodeJS.Timeout;
   context.subscriptions.push(
-    vscode.window.onDidChangeTextEditorSelection(() => {
+    vscode.window.onDidChangeTextEditorSelection((e) => {
       clearTimeout(timeout);
-      timeout = setTimeout(() => {
+
+      if (e.selections.length > 0 && !e.selections[0].isEmpty) {
         provider._onDidChangeCodeLenses.fire();
-      }, 50); // 50ms delay
+        return;
+      }
+
+      timeout = setTimeout(() => {
+        if (e.selections.length > 0 && !e.selections[0].isEmpty) {
+          return;
+        }
+
+        provider._onDidChangeCodeLenses.fire();
+      }, displayDelayInMS);
     }),
   );
 
@@ -178,6 +196,10 @@ export function activate(context: vscode.ExtensionContext) {
   });
 
   context.subscriptions.push(copyCommand);
+
+  context.subscriptions.push({
+    dispose: () => clearTimeout(timeout)
+});
 }
 
 export function deactivate() {}
